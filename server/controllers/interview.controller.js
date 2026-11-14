@@ -387,7 +387,7 @@ export const finishInterview = async (req, res) => {
     const avgCorrectness = totalQuestions ? totalCorrectness / totalQuestions : 0;
 
     interview.finalScore = Number(finalScore.toFixed(1));
-    interview.status = "complete";
+    interview.status = "completed";
 
     await interview.save();
 
