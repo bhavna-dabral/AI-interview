@@ -1,16 +1,60 @@
-# React + Vite
+# 🤖 InterviewIQ.AI — AI-Powered Mock Interview Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+An intelligent, full-stack MERN mock interview platform that analyzes candidate resumes, conducts adaptive AI-driven interviews, scores responses across multiple dimensions, and generates actionable performance reports.
 
-Currently, two official plugins are available:
+🔗 **Live Demo:** [https://ai-interview-client-gx0c.onrender.com](https://ai-interview-client-gx0c.onrender.com)  
+⚙️ **Backend API:** [https://ai-interview-fevz.onrender.com](https://ai-interview-fevz.onrender.com)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## ✨ Key Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Smart Resume Parsing:** Upload a PDF resume (`pdf-parse-new`) to automatically extract target roles, experience levels, projects, and technical skills.
+- **Tailored AI Question Generation:** Generates 5 progressive interview questions (Easy → Medium → Hard) personalized to the candidate's resume, role, and selected interview mode via OpenRouter AI.
+- **Real-Time Answer Evaluation:** Evaluates submitted answers with strict time limits and scores each response across **Confidence**, **Communication**, and **Correctness** (0–10 scale) alongside concise, human-like feedback.
+- **Comprehensive Performance Reports & History:** Tracks past mock interviews, displays question-by-question breakdowns, and calculates overall performance metrics.
+- **Credit-Based Usage & Razorpay Payments:** Integrated Razorpay checkout (`/order` & `/verify` with HMAC SHA256 signature verification) allowing users to purchase interview credits securely.
+- **Google OAuth & JWT Session Management:** Seamless Google Sign-In powered by Firebase Authentication, paired with HTTP-only, cross-site secure JWT cookies.
 
-## Expanding the Oxlint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## 🛠️ Tech Stack
+
+| Layer | Technologies |
+| :--- | :--- |
+| **Frontend** | React, Vite, Redux Toolkit, React Router, Tailwind CSS, Framer Motion (`motion`), Axios, Firebase Auth |
+| **Backend** | Node.js, Express.js, MongoDB, Mongoose, JSON Web Tokens (JWT), Cookie-Parser, Multer |
+| **AI & Parsing** | OpenRouter API (`openRouter.service.js`), `pdf-parse-new` |
+| **Payments** | Razorpay Node SDK & Checkout.js |
+| **Deployment** | Render (Static Site for Client + Web Service for API) |
+
+---
+
+## 📂 Project Structure
+
+```text
+AI-interview/
+├── client/                     # React + Vite Frontend
+│   ├── src/
+│   │   ├── pages/
+│   │   │   ├── Home.jsx
+│   │   │   ├── Auth.jsx
+│   │   │   ├── InterviewPage.jsx
+│   │   │   ├── InterviewHistory.jsx
+│   │   │   ├── InterviewReport.jsx
+│   │   │   └── Pricing.jsx
+│   │   ├── redux/              # State management (userSlice)
+│   │   ├── utils/              # Firebase configuration
+│   │   └── App.jsx
+│   └── package.json
+│
+├── server/                     # Node.js + Express Backend
+│   ├── config/                 # MongoDB connection & JWT generator
+│   ├── controllers/            # Auth, User, Interview, & Payment logic
+│   ├── middlewares/            # Auth verification & file upload
+│   ├── models/                 # User & Interview Mongoose schemas
+│   ├── routes/                 # API route definitions
+│   ├── services/               # OpenRouter AI & Razorpay services
+│   └── index.js
+│
+└── README.md
