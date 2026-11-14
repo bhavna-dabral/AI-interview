@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { BsRobot } from 'react-icons/bs';
 import { IoSparkles } from 'react-icons/io5';
@@ -9,22 +8,17 @@ import { auth, provider } from '../utils/firebase';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { setUserData } from '../redux/userSlice';
+import { ServerUrl } from '../App';
 
-const ServerUrl = "http://localhost:8000";
-
-function Auth({isModel =false}) {
-
+function Auth({ isModel = false }) {
   const dispatch = useDispatch();
-
   const [loading, setLoading] = useState(false);
 
   const handleGoogleAuth = async () => {
-
     try {
       setLoading(true);
 
       const response = await signInWithPopup(auth, provider);
-
       const User = response.user;
 
       const name = User.displayName;
@@ -37,73 +31,55 @@ function Auth({isModel =false}) {
       );
 
       dispatch(setUserData(result.data));
-
     } catch (error) {
-
       console.log("Google Authentication Error:", error);
-
       dispatch(setUserData(null));
-
     } finally {
       setLoading(false);
     }
   };
 
- return (
-  <div className={`
-    w-full
-    ${isModel 
-      ? "py-4" 
-      : "min-h-screen bg-[#f3f3f3] flex items-center justify-center px-6 py-20"
-    }
-  `}>
-
+  return (
+    <div
+      className={`
+        w-full
+        ${isModel
+          ? "py-4"
+          : "min-h-screen bg-[#f3f3f3] flex items-center justify-center px-6 py-20"
+        }
+      `}
+    >
       <motion.div
         initial={{ opacity: 0, y: -40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.05 }}
         className="w-full max-w-md p-8 rounded-3xl bg-white shadow-2xl border border-gray-200"
       >
-
         {/* Logo */}
-
         <div className="flex items-center justify-center gap-3 mb-8">
-
           <div className="bg-black text-white p-3 rounded-xl">
             <BsRobot size={24} />
           </div>
-
           <h2 className="text-2xl font-bold text-gray-900">
             InterviewIQ.AI
           </h2>
-
         </div>
 
         {/* Heading */}
-
         <h1 className="text-2xl md:text-3xl font-semibold text-center leading-snug mb-4">
-
           Continue with{' '}
-
           <span className="bg-green-100 text-green-600 px-3 py-1 rounded-full inline-flex items-center gap-2">
-
             <IoSparkles size={16} />
-
             AI Smart Interview
-
           </span>
-
         </h1>
 
         <p className="text-gray-500 text-center text-sm md:text-base leading-relaxed mb-8">
-
           Sign in to start AI-powered mock interviews,
           track your progress, and unlock detailed performance insights.
-
         </p>
 
         {/* Google Authentication Button */}
-
         <motion.button
           onClick={handleGoogleAuth}
           disabled={loading}
@@ -111,15 +87,10 @@ function Auth({isModel =false}) {
           whileTap={{ opacity: 1, scale: 0.98 }}
           className="w-full flex items-center justify-center gap-3 py-3 bg-black text-white rounded-full shadow-md disabled:opacity-60"
         >
-
           <FcGoogle size={20} />
-
           {loading ? 'Signing in...' : 'Continue with Google'}
-
         </motion.button>
-
       </motion.div>
-
     </div>
   );
 }
