@@ -1,4 +1,3 @@
-
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
@@ -15,10 +14,21 @@ dotenv.config();
 
 const app = express();
 
-// CORS Configuration
+// CORS Configuration (Updated for Local + Render Deployment)
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://ai-interview-client-gx0c.onrender.com",
+];
+
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
@@ -32,7 +42,7 @@ app.use(cookieParser());
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/interview", interviewRouter);
-app.use("/api/payment", paymentRouter)
+app.use("/api/payment", paymentRouter);
 
 // Health Check
 app.get("/", (req, res) => {
